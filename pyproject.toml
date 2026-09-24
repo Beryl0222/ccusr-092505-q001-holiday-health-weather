@@ -1,0 +1,5 @@
+[project]
+name = "holiday-health-weather"
+version = "0.1.0"
+description = "假日气象健康联动台领域契约"
+requires-python = ">=3.11"
