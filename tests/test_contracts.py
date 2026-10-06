@@ -35,6 +35,31 @@ class ContractTests(unittest.TestCase):
         issues = validate_event(payload, self.schema)
         self.assertEqual([("event_type", "unsupported_value")], [(item.field, item.code) for item in issues])
 
+    def test_schema_enums_match_python_registry(self) -> None:
+        from holiday_health_weather import AGGREGATE_TYPES, EVENT_TYPES
+
+        schema_events = set(self.schema["properties"]["event_type"]["enum"])
+        schema_aggregates = set(self.schema["properties"]["aggregate_type"]["enum"])
+        self.assertEqual(EVENT_TYPES, schema_events)
+        self.assertEqual(AGGREGATE_TYPES, schema_aggregates)
+
+    def test_emitted_service_events_satisfy_contract(self) -> None:
+        import json
+
+        from support import AREA, build_service, cst, rain, register_trip
+
+        svc = build_service(cst(2026, 10, 2, 8))
+        svc.register_forecast(
+            "fc-1", AREA, cst(2026, 10, 2, 0), cst(2026, 10, 3, 0),
+            [rain(12, cst(2026, 10, 2, 8))],
+        )
+        register_trip(svc)
+        svc.draft_for_trip("trip-wang")
+        svc.approve_notice("notice-trip-wang-seg-center-lingfeng", "小李")
+        for event in svc.store.all_events():
+            envelope = json.loads(json.dumps(event.to_dict(), ensure_ascii=False))
+            self.assertEqual([], validate_event(envelope, self.schema))
+
 
 if __name__ == "__main__":
     unittest.main()

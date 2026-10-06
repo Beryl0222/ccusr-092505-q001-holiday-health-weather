@@ -20,19 +20,41 @@
       "type": "string",
       "enum": [
         "FORECAST_ISSUED",
-        "NOTICE_APPROVED",
-        "NOTICE_SENT",
+        "FORECAST_REVISED",
+        "THRESHOLD_REGISTERED",
+        "THRESHOLD_UPDATED",
+        "ROUTE_REGISTERED",
+        "ROUTE_REROUTED",
+        "PERSON_REGISTERED",
+        "MEDICAL_POINT_REGISTERED",
+        "MEDICAL_POINT_WITHDRAWN",
+        "SCENIC_CLOSURE_NOTIFIED",
+        "SCENIC_REOPENED",
+        "AUTHORIZATION_GRANTED",
+        "AUTHORIZATION_REVOKED",
+        "TRIP_REGISTERED",
+        "TRIP_DESTINATION_CHANGED",
+        "ADVISORY_DRAFTED",
+        "ADVISORY_APPROVED",
+        "ADVISORY_SENT",
+        "ADVISORY_RECALCULATED",
         "RISK_ESCALATED",
-        "POINT_WITHDRAWN"
+        "RECEIPT_ACKNOWLEDGED",
+        "RECEIPT_COMPLETED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "forecast",
+        "risk_threshold",
         "travel_segment",
-        "health_notice",
-        "medical_point"
+        "focus_person",
+        "medical_point",
+        "scenic_closure",
+        "authorization",
+        "trip",
+        "health_notice"
       ]
     },
     "aggregate_id": {
